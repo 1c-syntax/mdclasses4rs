@@ -1,14 +1,6 @@
 use serde::{Deserialize, Serialize};
-use crate::general::{StringValue, Item};
 
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GeneralInfo {
-    #[serde(rename="xmlns:mdclass")]
-    pub md_class: String,
-    pub uuid: String,
-    pub name: StringValue,
-}
+use crate::general::{GeneralInfo, Item, StringValue};
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -36,6 +28,8 @@ pub struct ConfigurationRoot {
     pub common_modules: Vec<StringValue>,
     #[serde(default)]
     pub subsystems: Vec<StringValue>,
+    #[serde(default)]
+    pub session_parameters: Vec<StringValue>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
