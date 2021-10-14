@@ -12,7 +12,7 @@ pub struct SessionParameter {
     #[serde(flatten)]
     pub general_info: GeneralInfo,
     pub synonym: Vec<Item>,
-    #[serde(rename="type")]
+    #[serde(rename = "type")]
     pub parameter_type: SessionParameterType,
 }
 
@@ -20,8 +20,8 @@ pub struct SessionParameter {
 #[serde(rename_all = "camelCase")]
 pub struct SessionParameterType {
     pub types: Vec<StringValue>,
-    pub string_qualifiers: ParameterQualifier,
-    pub binary_qualifiers: ParameterQualifier,
+    pub string_qualifiers: Option<ParameterQualifier>,
+    pub binary_qualifiers: Option<ParameterQualifier>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]

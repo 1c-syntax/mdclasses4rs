@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::configuration::language::Language;
 
 use crate::general::{GeneralInfo, Item, StringValue};
 
@@ -30,6 +31,8 @@ pub struct ConfigurationRoot {
     pub subsystems: Vec<StringValue>,
     #[serde(default)]
     pub session_parameters: Vec<StringValue>,
+    #[serde(default)]
+    pub roles: Vec<StringValue>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
@@ -40,51 +43,40 @@ pub struct ContainedObject {
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Language {
-    uuid: String,
-    name: StringValue,
-    synonym: Vec<Item>,
-    language_code: StringValue,
-}
-
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct ScriptVariant {
     #[serde(rename="$value")]
-    body: ScriptLanguage,
+    value: ScriptLanguage,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct DataLockControlMode {
     #[serde(rename="$value")]
-    body: DataLockMode,
+    value: DataLockMode,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(untagged)]
 pub enum ScriptLanguage {
-    English(String),
-    Russian(String)
+    English,
+    Russian
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(untagged)]
 pub enum DataLockMode {
-    Managed(String),
-    AutomaticAndManaged(String),
-    Automatic(String)
+    Managed,
+    AutomaticAndManaged,
+    Automatic
 }
 
 impl DataLockControlMode {
     pub fn default() -> Self {
         DataLockControlMode {
-            body: DataLockMode::Automatic("Automatic".to_string())
+            value: DataLockMode::Automatic
         }
     }
 }
 
 pub fn is_data_lock_automatic(data_lock: &DataLockControlMode) -> bool {
-    return data_lock.body == DataLockMode::Automatic("Automatic".to_string())
+    return data_lock.value == DataLockMode::Automatic
 }
 
 fn default_data_lock_mode() -> DataLockControlMode {

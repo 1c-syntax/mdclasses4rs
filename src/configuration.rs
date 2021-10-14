@@ -7,6 +7,7 @@ use quick_xml::de::from_reader;
 use crate::configuration::common_module::CommonModule;
 
 use crate::configuration::configuration_root::ConfigurationRoot;
+use crate::configuration::role::Role;
 use crate::configuration::session_parameter::SessionParameter;
 use crate::configuration::subsystem::Subsystem;
 use crate::general;
@@ -15,6 +16,8 @@ pub mod configuration_root;
 pub mod session_parameter;
 pub mod common_module;
 pub mod subsystem;
+pub mod role;
+pub mod language;
 
 #[derive(Debug)]
 pub struct Configuration {
@@ -22,6 +25,7 @@ pub struct Configuration {
     pub common_modules: Vec<CommonModule>,
     pub subsystems: Vec<Subsystem>,
     pub session_parameters: Vec<SessionParameter>,
+    pub roles: Vec<Role>,
 }
 
 impl Configuration {
@@ -35,16 +39,19 @@ impl Configuration {
         let common_modules_names = &root.common_modules;
         let subsystems_names = &root.subsystems;
         let session_parameters_names = &root.session_parameters;
+        let role_names = &root.roles;
 
         let common_modules = general::read_objects(common_modules_names, root_path);
         let subsystems = general::read_objects(subsystems_names, root_path);
         let session_parameters = general::read_objects(session_parameters_names, root_path);
+        let roles = general::read_objects(role_names, root_path);
 
         Configuration {
             root,
             common_modules,
             subsystems,
             session_parameters,
+            roles
         }
     }
 }
