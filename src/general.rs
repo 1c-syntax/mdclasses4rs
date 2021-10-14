@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GeneralInfo {
-    #[serde(rename="xmlns:mdclass")]
+    #[serde(rename = "xmlns:mdclass")]
     pub md_class: String,
     pub uuid: String,
     pub name: StringValue,
@@ -14,7 +14,7 @@ pub struct GeneralInfo {
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct StringValue {
-    #[serde(rename="$value")]
+    #[serde(rename = "$value")]
     pub value: String,
 }
 
@@ -26,14 +26,14 @@ pub struct Item {
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct BooleanValue {
-    #[serde(rename="$value")]
-    body: bool,
+    #[serde(rename = "$value")]
+    value: bool,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 pub struct IntValue {
-    #[serde(rename="$value")]
-    body: i32,
+    #[serde(rename = "$value")]
+    value: i32,
 }
 
 pub trait MDObject {
@@ -55,4 +55,12 @@ fn extract_name_from_full_name(full_name: &String) -> String {
     } else {
         full_name.to_string()
     };
+}
+
+impl BooleanValue {
+    pub fn new() -> Self {
+        BooleanValue {
+            value: false
+        }
+    }
 }
