@@ -1,6 +1,3 @@
-extern crate serde;
-extern crate quick_xml;
-
 use serde::{Deserialize, Serialize};
 use crate::general::{StringValue, Item};
 
