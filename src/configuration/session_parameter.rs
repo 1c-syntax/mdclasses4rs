@@ -1,10 +1,12 @@
 use std::fs::File;
 use std::io::BufReader;
 use std::path::{Path, PathBuf};
+
 use quick_xml::de::from_reader;
-use crate::general::GeneralInfo;
-use crate::general::{Item, MDObject, StringValue};
 use serde::{Deserialize, Serialize};
+
+use crate::general::{GeneralInfo, ObjectType};
+use crate::general::{Item, MDObject};
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -13,22 +15,7 @@ pub struct SessionParameter {
     pub general_info: GeneralInfo,
     pub synonym: Vec<Item>,
     #[serde(rename = "type")]
-    pub parameter_type: SessionParameterType,
-}
-
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct SessionParameterType {
-    pub types: Vec<StringValue>,
-    pub string_qualifiers: Option<ParameterQualifier>,
-    pub binary_qualifiers: Option<ParameterQualifier>,
-}
-
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ParameterQualifier {
-    #[serde(default)]
-    pub length: i32,
+    pub parameter_type: ObjectType,
 }
 
 impl MDObject for SessionParameter {

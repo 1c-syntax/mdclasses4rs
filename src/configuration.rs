@@ -4,6 +4,7 @@ use std::io::BufReader;
 use std::path::{Path, PathBuf};
 
 use quick_xml::de::from_reader;
+use crate::configuration::common_attribute::CommonAttribute;
 use crate::configuration::common_module::CommonModule;
 
 use crate::configuration::configuration_root::ConfigurationRoot;
@@ -18,6 +19,7 @@ pub mod common_module;
 pub mod subsystem;
 pub mod role;
 pub mod language;
+pub mod common_attribute;
 
 #[derive(Debug)]
 pub struct Configuration {
@@ -26,6 +28,7 @@ pub struct Configuration {
     pub subsystems: Vec<Subsystem>,
     pub session_parameters: Vec<SessionParameter>,
     pub roles: Vec<Role>,
+    pub common_attributes: Vec<CommonAttribute>,
 }
 
 impl Configuration {
@@ -40,18 +43,21 @@ impl Configuration {
         let subsystems_names = &root.subsystems;
         let session_parameters_names = &root.session_parameters;
         let role_names = &root.roles;
+        let common_attributes_names = &root.common_attributes;
 
         let common_modules = general::read_objects(common_modules_names, root_path);
         let subsystems = general::read_objects(subsystems_names, root_path);
         let session_parameters = general::read_objects(session_parameters_names, root_path);
         let roles = general::read_objects(role_names, root_path);
+        let common_attributes = general::read_objects(common_attributes_names, root_path);
 
         Configuration {
             root,
             common_modules,
             subsystems,
             session_parameters,
-            roles
+            roles,
+            common_attributes,
         }
     }
 }
