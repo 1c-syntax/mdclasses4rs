@@ -10,7 +10,7 @@ pub struct ConfigurationRoot {
     pub general_info: GeneralInfo,
     #[serde(default)]
     pub synonym: Vec<Item>,
-    pub comment: StringValue,
+    pub comment: Option<StringValue>,
     pub contained_objects: Vec<ContainedObject>,
     pub configuration_extension_compatibility_mode: StringValue,
     pub default_run_mode: StringValue,
@@ -33,6 +33,8 @@ pub struct ConfigurationRoot {
     pub session_parameters: Vec<StringValue>,
     #[serde(default)]
     pub roles: Vec<StringValue>,
+    #[serde(default)]
+    pub common_attributes: Vec<StringValue>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
