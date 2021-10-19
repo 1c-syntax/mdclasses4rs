@@ -4,18 +4,21 @@ use std::path::{Path, PathBuf};
 use quick_xml::de::from_reader;
 use serde::{Deserialize, Serialize};
 
-use crate::general::{BooleanValue, GeneralInfo, MDObject, ObjectType, StringValue, Value};
-use crate::general::general_enum::{ChoiceOnHistoryOnInputValue, CreateOnInputValue, DataHistoryValue, FillCheckingValue, FullTextSearchValue, IndexingValue};
+use crate::general::{BooleanValue, GeneralInfo, MDObject, TypeQualifier, StringValue, Value, Item};
+use crate::general::md_enum::{ChoiceOnHistoryOnInputValue, CreateOnInputValue, DataHistoryValue, FillCheckingValue, FullTextSearchValue, IndexingValue};
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CommonAttribute {
     #[serde(flatten)]
     pub general_info: GeneralInfo,
+    #[serde(default)]
+    pub synonym: Vec<Item>,
     #[serde(rename = "type", default)]
-    pub types: Vec<ObjectType>,
+    pub types: Vec<TypeQualifier>,
     pub password_mode: Option<BooleanValue>,
-    pub tool_tip: Option<StringValue>,
+    #[serde(rename = "type", default)]
+    pub tool_tip: Vec<Item>,
     pub mark_negatives: Option<BooleanValue>,
     pub mask: Option<StringValue>,
     pub multi_line: Option<BooleanValue>,

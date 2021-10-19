@@ -1,7 +1,11 @@
 use std::path::Path;
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
-pub mod general_enum;
+
+pub mod md_enum;
+pub mod produced_type;
+pub mod attribute;
+pub mod tabular_section;
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -58,7 +62,7 @@ pub struct NumberQualifier {
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ObjectType {
+pub struct TypeQualifier {
     pub types: Vec<StringValue>,
     pub string_qualifiers: Option<ParameterQualifier>,
     pub binary_qualifiers: Option<ParameterQualifier>,

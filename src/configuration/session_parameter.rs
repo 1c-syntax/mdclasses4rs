@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use quick_xml::de::from_reader;
 use serde::{Deserialize, Serialize};
 
-use crate::general::{GeneralInfo, ObjectType};
+use crate::general::{GeneralInfo, TypeQualifier};
 use crate::general::{Item, MDObject};
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
@@ -15,7 +15,8 @@ pub struct SessionParameter {
     pub general_info: GeneralInfo,
     pub synonym: Vec<Item>,
     #[serde(rename = "type")]
-    pub parameter_type: ObjectType,
+    pub parameter_type: TypeQualifier,
+
 }
 
 impl MDObject for SessionParameter {
