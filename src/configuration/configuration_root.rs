@@ -23,7 +23,7 @@ pub struct ConfigurationRoot {
     pub brief_information: Vec<Item>,
     pub detailed_information: Vec<Item>,
     #[serde(default = "default_data_lock_mode", skip_serializing_if = "is_data_lock_automatic")]
-    pub data_lock_control_mode: DataLockControlMode,
+    pub data_lock_control_mode: DataLockControlValue,
     pub languages: Vec<Language>,
     #[serde(default)]
     pub common_modules: Vec<StringValue>,
@@ -35,6 +35,8 @@ pub struct ConfigurationRoot {
     pub roles: Vec<StringValue>,
     #[serde(default)]
     pub common_attributes: Vec<StringValue>,
+    #[serde(default)]
+    pub exchange_plans: Vec<StringValue>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
@@ -51,7 +53,7 @@ pub struct ScriptVariant {
 }
 
 #[derive(Debug, Deserialize, PartialEq, Serialize)]
-pub struct DataLockControlMode {
+pub struct DataLockControlValue {
     #[serde(rename="$value")]
     value: DataLockMode,
 }
@@ -69,18 +71,26 @@ pub enum DataLockMode {
     Automatic
 }
 
-impl DataLockControlMode {
+impl DataLockControlValue {
     pub fn default() -> Self {
-        DataLockControlMode {
+        DataLockControlValue {
             value: DataLockMode::Automatic
         }
     }
 }
 
-pub fn is_data_lock_automatic(data_lock: &DataLockControlMode) -> bool {
+pub fn is_data_lock_automatic(data_lock: &DataLockControlValue) -> bool {
     return data_lock.value == DataLockMode::Automatic
 }
 
-fn default_data_lock_mode() -> DataLockControlMode {
-    DataLockControlMode::default()
+fn default_data_lock_mode() -> DataLockControlValue {
+    DataLockControlValue::default()
+}
+
+impl Default for DataLockControlValue {
+    fn default() -> Self {
+        DataLockControlValue {
+            value: DataLockMode::Managed
+        }
+    }
 }

@@ -8,6 +8,7 @@ use crate::configuration::common_attribute::CommonAttribute;
 use crate::configuration::common_module::CommonModule;
 
 use crate::configuration::configuration_root::ConfigurationRoot;
+use crate::configuration::exchange_plan::ExchangePlan;
 use crate::configuration::role::Role;
 use crate::configuration::session_parameter::SessionParameter;
 use crate::configuration::subsystem::Subsystem;
@@ -20,6 +21,7 @@ pub mod subsystem;
 pub mod role;
 pub mod language;
 pub mod common_attribute;
+pub mod exchange_plan;
 
 #[derive(Debug)]
 pub struct Configuration {
@@ -29,6 +31,7 @@ pub struct Configuration {
     pub session_parameters: Vec<SessionParameter>,
     pub roles: Vec<Role>,
     pub common_attributes: Vec<CommonAttribute>,
+    pub exchange_plans: Vec<ExchangePlan>,
 }
 
 impl Configuration {
@@ -44,12 +47,14 @@ impl Configuration {
         let session_parameters_names = &root.session_parameters;
         let role_names = &root.roles;
         let common_attributes_names = &root.common_attributes;
+        let exchange_plan_names = &root.exchange_plans;
 
         let common_modules = general::read_objects(common_modules_names, root_path);
         let subsystems = general::read_objects(subsystems_names, root_path);
         let session_parameters = general::read_objects(session_parameters_names, root_path);
         let roles = general::read_objects(role_names, root_path);
         let common_attributes = general::read_objects(common_attributes_names, root_path);
+        let exchange_plans = general::read_objects(exchange_plan_names, root_path);
 
         Configuration {
             root,
@@ -58,6 +63,7 @@ impl Configuration {
             session_parameters,
             roles,
             common_attributes,
+            exchange_plans,
         }
     }
 }
